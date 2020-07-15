@@ -25,6 +25,7 @@ module.exports = {
 
   externals: {
     react: "react",
+    lazysizes: "lazysizes",
     "react-dom": "ReactDOM",
   },
 };
