@@ -7,7 +7,7 @@ module.exports = {
   output: {
     filename: "bundle.js",
     path: path.resolve(__dirname, "dist"),
-    library: "fast-image",
+    library: "@glints/fast-image",
     libraryTarget: "umd",
   },
 
