@@ -1,1 +1,1 @@
-export * from "./ThumborImage";
+export * from "./FastImage";

@@ -5,9 +5,9 @@ For now, you can do `yarn build` and `npx yalc publish` to publish this package 
 ## Usage
 
 ```
-<ThumborImage
-  serverURL="https://images-dev.glints.com"
+<FastImage
   src="https://glints-dashboard-dev.s3.amazonaws.com/images/landing/one-stop.png"
+  thumborServerURL="https://images-dev.glints.com"
   thumborOptions={{
     filters: [{ name: 'noise', args: [40] }],
   }}

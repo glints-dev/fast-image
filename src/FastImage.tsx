@@ -100,22 +100,29 @@ function getThumborImageURL(
   }`;
 }
 
-export interface ThumborImageProps {
+export interface FastImageProps {
   thumborOptions: ThumborOptions;
-  serverURL: string; // The URL of the Thumbor service
+  thumborServerURL: string; // The URL of the Thumbor service
+  thumborBreakpoints?: number[];
   src: string; // The URL of the image to process
-  breakpoints?: number[];
   imgProps: object; // Additional props to be passed to the final <img>
   lazy?: boolean;
 }
 
-export const ThumborImage = (props: ThumborImageProps) => {
-  const breakpoints = props.breakpoints || [160, 360, 480, 720, 960, 1024];
+export const FastImage = (props: FastImageProps) => {
+  const breakpoints = props.thumborBreakpoints || [
+    160,
+    360,
+    480,
+    720,
+    960,
+    1024,
+  ];
 
   // Construct Thumbor URLs for different breakpoints and merge them into a srcSet.
   const srcSet = breakpoints
     .map((breakpoint) => {
-      const url = getThumborImageURL(props.serverURL, props.src, {
+      const url = getThumborImageURL(props.thumborServerURL, props.src, {
         ...props.thumborOptions,
         size: {
           height: 0,
@@ -126,7 +133,7 @@ export const ThumborImage = (props: ThumborImageProps) => {
     })
     .join(",");
 
-  const src = getThumborImageURL(props.serverURL, props.src, {
+  const src = getThumborImageURL(props.thumborServerURL, props.src, {
     ...props.thumborOptions,
     size: {
       height: 0,
