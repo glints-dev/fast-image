@@ -1,5 +1,5 @@
 {
-  "name": "webpack-typescript-babel",
+  "name": "fast-image",
   "version": "1.0.0",
   "description": "A sample setup using Webpack and Babel to build TypeScript code, and using TypeScript for type-checking.",
   "scripts": {

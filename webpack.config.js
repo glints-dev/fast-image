@@ -7,7 +7,7 @@ module.exports = {
   output: {
     filename: "bundle.js",
     path: path.resolve(__dirname, "dist"),
-    library: "webpack-typescript-babel",
+    library: "fast-image",
     libraryTarget: "umd",
   },
 
