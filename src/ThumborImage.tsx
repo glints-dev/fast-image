@@ -1,4 +1,5 @@
 import React from "react";
+import { LazyImage } from "./LazyImage";
 
 export interface Size {
   width: number;
@@ -105,22 +106,25 @@ export interface ThumborImageProps {
   src: string; // The URL of the image to process
   breakpoints?: number[];
   imgProps: object; // Additional props to be passed to the final <img>
+  lazy?: boolean;
 }
 
 export const ThumborImage = (props: ThumborImageProps) => {
   const breakpoints = props.breakpoints || [160, 360, 480, 720, 960, 1024];
 
   // Construct Thumbor URLs for different breakpoints and merge them into a srcSet.
-  const srcSet = breakpoints.map((breakpoint) => {
-    const url = getThumborImageURL(props.serverURL, props.src, {
-      ...props.thumborOptions,
-      size: {
-        height: 0,
-        width: breakpoint,
-      },
-    });
-    return `${url} ${breakpoint}w`;
-  });
+  const srcSet = breakpoints
+    .map((breakpoint) => {
+      const url = getThumborImageURL(props.serverURL, props.src, {
+        ...props.thumborOptions,
+        size: {
+          height: 0,
+          width: breakpoint,
+        },
+      });
+      return `${url} ${breakpoint}w`;
+    })
+    .join(",");
 
   const src = getThumborImageURL(props.serverURL, props.src, {
     ...props.thumborOptions,
@@ -130,5 +134,9 @@ export const ThumborImage = (props: ThumborImageProps) => {
     },
   });
 
-  return <img src={src} srcSet={srcSet.join(",")} {...props.imgProps} />;
+  if (props.lazy) {
+    return <LazyImage src={src} srcSet={srcSet} {...props.imgProps} />;
+  } else {
+    return <img src={src} srcSet={srcSet} {...props.imgProps} />;
+  }
 };
