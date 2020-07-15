@@ -28,4 +28,6 @@ module.exports = {
     lazysizes: "lazysizes",
     "react-dom": "ReactDOM",
   },
+
+  devtool: "cheap-source-map",
 };
