@@ -20,3 +20,9 @@ For now, you can do `yarn build` and `npx yalc publish` to publish this package 
 ```
 
 The `imgProps.sizes` param will set the width of the image. If `lazy` is `true`, loading of the image will be deferred until the viewport reaches the position of the image in the page.
+
+```
+<LazyImage src={src} srcSet={srcSet} {...otherProps} />
+```
+
+A tiny wrapper to add lazysizes lazy loading to an `<img>`. Used by `FastImage` under the hood if `lazy=true` but might be handy if you don't want the Thumbor functionalities.
