@@ -106,8 +106,8 @@ export interface FastImageProps {
   thumborServerURL: string; // The URL of the Thumbor service
   thumborBreakpoints?: number[];
   src: string; // The URL of the image to process
-  imgProps: object; // Additional props to be passed to the final <img>
   lazy?: boolean;
+  [key: string]: any;
 }
 
 export const ContextlessFastImage = (props: FastImageProps) => {
@@ -142,10 +142,17 @@ export const ContextlessFastImage = (props: FastImageProps) => {
     },
   });
 
+  const safeProps = Object.assign({}, props);
+  delete safeProps.thumborOptions;
+  delete safeProps.thumborServerURL;
+  delete safeProps.thumborBreakpoints;
+  delete safeProps.src;
+  delete safeProps.lazy;
+
   if (props.lazy) {
-    return <LazyImage src={src} srcSet={srcSet} {...props.imgProps} />;
+    return <LazyImage {...safeProps} src={src} srcSet={srcSet} />;
   } else {
-    return <img src={src} srcSet={srcSet} {...props.imgProps} />;
+    return <img {...safeProps} src={src} srcSet={srcSet} />;
   }
 };
 
