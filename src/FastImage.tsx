@@ -1,5 +1,6 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 import { LazyImage } from "./LazyImage";
+import { ThumborConsumer } from "./ThumborContext";
 
 export interface Size {
   width: number;
@@ -109,7 +110,7 @@ export interface FastImageProps {
   lazy?: boolean;
 }
 
-export const FastImage = (props: FastImageProps) => {
+export const ContextlessFastImage = (props: FastImageProps) => {
   const breakpoints = props.thumborBreakpoints || [
     160,
     360,
@@ -147,3 +148,21 @@ export const FastImage = (props: FastImageProps) => {
     return <img src={src} srcSet={srcSet} {...props.imgProps} />;
   }
 };
+
+export const FastImage: FunctionComponent<FastImageProps> = (props) => (
+  <ThumborConsumer>
+    {(thumborServerURL) => {
+      if (!props.thumborServerURL && !thumborServerURL) {
+        throw "thumborServerURL not specified! You must provide a thumborServerURL either as a prop or through an ancestral ThumborProvider.";
+      }
+      return (
+        <ContextlessFastImage
+          {...props}
+          thumborServerURL={
+            props.thumborServerURL || (thumborServerURL as string)
+          }
+        />
+      );
+    }}
+  </ThumborConsumer>
+);
