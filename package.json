@@ -13,6 +13,8 @@
     "name": "Marco Brack",
     "email": "marco@glint.com"
   },
+  "repository": "github:glints-dev/fast-image",
+  "homepage": "https://github.com/glints-dev/fast-image#fast-image",
   "main": "dist/bundle.js",
   "types": "dist/types/index.d.ts",
   "license": "MIT",
