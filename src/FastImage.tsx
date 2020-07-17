@@ -33,7 +33,7 @@ export interface ThumborOptions {
 
 // Construct the thumbor URL parts.
 // Reference: http://thumbor.readthedocs.io/en/latest/usage.html
-function getThumborImageURL(
+export function getThumborImageURL(
   serverURL: string,
   src: string,
   options: ThumborOptions
