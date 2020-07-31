@@ -8,6 +8,7 @@ Just follow the usual npm publish workflow:
 
 ```
 git commit // commit your changes
+npm run build
 npm version patch // or minor or major
 npm publish
 git push --all // push your changes and tags to remote
