@@ -1,6 +1,6 @@
-import React, { FunctionComponent, useContext } from "react";
+import React, { useContext } from "react";
 import { LazyImage } from "./LazyImage";
-import { ThumborConsumer, ThumborContext } from "./ThumborContext";
+import { ThumborContext } from "./ThumborContext";
 
 export interface Size {
   width: number;
