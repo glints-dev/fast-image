@@ -1,26 +1,28 @@
 import React from "react";
 import "lazysizes";
 
-export interface LazyImageProps {
+export interface LazyImageProps
+  extends React.ImgHTMLAttributes<HTMLImageElement> {
   src: string;
   srcSet: string;
   sizes?: string;
   className?: string;
-  [key: string]: any;
 }
 
-export const LazyImage = (props: LazyImageProps) => {
-  const safeProps = { ...props };
-  delete safeProps.src;
-  delete safeProps.srcSet;
-  delete safeProps.sizes;
+export const LazyImage = ({
+  sizes,
+  src,
+  srcSet,
+  className,
+  ...safeProps
+}: LazyImageProps) => {
   return (
     <img
       {...safeProps}
-      data-sizes={props.sizes || "auto"}
-      data-src={props.src}
-      data-srcset={props.srcSet}
-      className={[props.className, "lazyload"].join(" ")}
+      data-sizes={sizes || "auto"}
+      data-src={src}
+      data-srcset={srcSet}
+      className={[className, "lazyload"].join(" ")}
     />
   );
 };

@@ -101,38 +101,38 @@ export function getThumborImageURL(
   }`;
 }
 
-export interface FastImageProps {
+export interface FastImageProps
+  extends React.ImgHTMLAttributes<HTMLImageElement> {
   thumborOptions: ThumborOptions;
   thumborServerURL?: string; // The URL of the Thumbor service
   thumborBreakpoints?: number[];
   src: string; // The URL of the image to process
   lazy?: boolean;
-  [key: string]: any;
 }
 
-export const FastImage = (props: FastImageProps) => {
+export const FastImage = ({
+  lazy,
+  src: srcFromProps,
+  thumborOptions,
+  thumborBreakpoints,
+  thumborServerURL: thumborServerURLFromProps,
+  ...safeProps
+}: FastImageProps) => {
   const thumborServerURLFromContext = useContext(ThumborContext);
   const thumborServerURL =
-    thumborServerURLFromContext || props.thumborServerURL;
+    thumborServerURLFromContext || thumborServerURLFromProps;
 
   if (!thumborServerURL) {
     throw "thumborServerURL not specified! You must provide a thumborServerURL either as a prop or through an ancestral ThumborProvider.";
   }
 
-  const breakpoints = props.thumborBreakpoints || [
-    160,
-    360,
-    480,
-    720,
-    960,
-    1024,
-  ];
+  const breakpoints = thumborBreakpoints || [160, 360, 480, 720, 960, 1024];
 
   // Construct Thumbor URLs for different breakpoints and merge them into a srcSet.
   const srcSet = breakpoints
     .map((breakpoint) => {
-      const url = getThumborImageURL(thumborServerURL, props.src, {
-        ...props.thumborOptions,
+      const url = getThumborImageURL(thumborServerURL, srcFromProps, {
+        ...thumborOptions,
         size: {
           height: 0,
           width: breakpoint,
@@ -142,22 +142,15 @@ export const FastImage = (props: FastImageProps) => {
     })
     .join(",");
 
-  const src = getThumborImageURL(thumborServerURL, props.src, {
-    ...props.thumborOptions,
+  const src = getThumborImageURL(thumborServerURL, srcFromProps, {
+    ...thumborOptions,
     size: {
       height: 0,
       width: breakpoints[breakpoints.length - 1],
     },
   });
 
-  const safeProps = Object.assign({}, props);
-  delete safeProps.thumborOptions;
-  delete safeProps.thumborServerURL;
-  delete safeProps.thumborBreakpoints;
-  delete safeProps.src;
-  delete safeProps.lazy;
-
-  if (props.lazy) {
+  if (lazy) {
     return <LazyImage {...safeProps} src={src} srcSet={srcSet} />;
   } else {
     return <img {...safeProps} src={src} srcSet={srcSet} />;
