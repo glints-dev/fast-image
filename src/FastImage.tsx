@@ -103,7 +103,7 @@ export function getThumborImageURL(
 
 export interface FastImageProps {
   thumborOptions: ThumborOptions;
-  thumborServerURL: string; // The URL of the Thumbor service
+  thumborServerURL?: string; // The URL of the Thumbor service
   thumborBreakpoints?: number[];
   src: string; // The URL of the image to process
   lazy?: boolean;
