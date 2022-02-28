@@ -131,7 +131,7 @@ export const FastImage = (props: FastImageProps) => {
   // Construct Thumbor URLs for different breakpoints and merge them into a srcSet.
   const srcSet = breakpoints
     .map((breakpoint) => {
-      const url = getThumborImageURL(props.thumborServerURL, props.src, {
+      const url = getThumborImageURL(thumborServerURL, props.src, {
         ...props.thumborOptions,
         size: {
           height: 0,
@@ -142,7 +142,7 @@ export const FastImage = (props: FastImageProps) => {
     })
     .join(",");
 
-  const src = getThumborImageURL(props.thumborServerURL, props.src, {
+  const src = getThumborImageURL(thumborServerURL, props.src, {
     ...props.thumborOptions,
     size: {
       height: 0,
